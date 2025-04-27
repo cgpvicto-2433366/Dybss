@@ -13,6 +13,7 @@ using System.Runtime.InteropServices.ObjectiveC;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Crypto.Digests;
 
 
 namespace Bibliotheque.Data
@@ -21,12 +22,12 @@ namespace Bibliotheque.Data
     /// Classe contenant toutes les actions pouvant être fait sur la 
     /// base de donnée
     /// </summary>
-    public class BaseDeDonnee : IUtilisateurSource
+    public class UtilisateurBaseDeDonnee : IUtilisateurSource
     {
         #region Attributs
         private static bool _status = false;
         private static MySqlConnection _connection;
-        private static BaseDeDonnee _instance = null;
+        private static UtilisateurBaseDeDonnee _instance = null;
         private string _tableAssocie = "users";
         #endregion
 
@@ -232,11 +233,16 @@ namespace Bibliotheque.Data
         }
 
         /// <summary>
-        /// Modifier les informationsd'un utilisateur se trouvant dans la base de donnée
+        /// Méthodes pour modifier les informations d'un utilisateur 
         /// </summary>
-        /// <param name="email">email pour identifier l'utilsateur il s'agit donc d'un paramètre obligatoire. Le autres sont facultatifs</param>
-        /// <returns>Les informatons une fois modifié</returns>
-        public Utilisateurs Modifier(string email, string nom, string prenom, string mdp)
+        /// <param name="emailID">Email de l'utilisateur servant a son identifiactaion(email avant modification)</param>
+        /// <param name="email"></param>
+        /// <param name="nom"></param>
+        /// <param name="prenom"></param>
+        /// <param name="mdp"></param>
+        /// <returns>Utilisateur modifié</returns>
+        /// <exception cref="Exception"></exception>
+        public Utilisateurs Modifier(string emailID, string email, string nom, string prenom, string mdp)
         {
             try
             {
@@ -260,7 +266,7 @@ namespace Bibliotheque.Data
                     requete += ", nom=@Nom";
                     requete += ", prenom=@Prenom";
                     requete += ", motDePasse = AES_ENCRYPT(SHA2(@mdp,256),@cle)";
-                    requete += " WHERE email=@Email;";
+                    requete += " WHERE email=@EmailId;";
 
                     Open();
 
@@ -269,6 +275,7 @@ namespace Bibliotheque.Data
                     commande.Parameters.AddWithValue("@Nom", nom);
                     commande.Parameters.AddWithValue("@Prenom", prenom);
                     commande.Parameters.AddWithValue("@mdp", mdp);
+                    commande.Parameters.AddWithValue("@EmailId",emailID);
 
                     int compteur = commande.ExecuteNonQuery();
 
@@ -333,41 +340,58 @@ namespace Bibliotheque.Data
 
         /// <summary>
         /// Chercher si le compte d'un utilisateur est déja existant
-        /// cette recherche se basera sur l'email de l'utilisateur
-        /// car elle est unique
+        /// La recherche peut se faire en fonction du nom, du prénom ou de l'email
         /// </summary>
         /// <param name="email">Email de l'utilisateur</param>
-        /// <returns>Toutes les informations d'un utilisateur avec le mot de passe crypter et hasher</returns>
-        public List<Utilisateurs>? ChercherUtilisateurs(string email)
+        /// <param name="nom">Nom de l'utilisateur</param>
+        /// <param name="prenom">Prenom de l'utilsateur</param>
+        /// <returns>Une liste d'utilisateur pouvant être null</returns>
+        /// <exception cref="Exception">Si il y'a une erreur coté serveur</exception>
+        public List<Utilisateurs>? ChercherUtilisateurs(string? email=null, string? nom=null, string? prenom=null)
         {
-            VerifivationDesChampsNull(email);
-            VerifivationDesChampsVide(email);
+            //Construction de la requête
+            string requete = $"SELECT nom, prenom, email, motDePasse FROM {_tableAssocie}";
+
+            if (email != null)
+            {
+                VerifivationDesChampsVide(email);
+                requete += " WHERE email=@Email;";
+            }
+            else if (nom != null)
+            {
+                VerifivationDesChampsVide(nom);
+                requete += " WHERE nom=@Nom";
+            }
+
+            else if (prenom != null)
+            {
+                VerifivationDesChampsVide(prenom);
+                requete += " WHERE prenom=@Prenom;";
+            }
+                
+
             List<Utilisateurs> resultats= new List<Utilisateurs>();
 
             try
             {
-
-                //Construction de la requête
-                string requete = $"SELECT nom, prenom, email, motDePasse FROM {_tableAssocie} WHERE email=@Email;";
-
                 Open();
 
                 MySqlCommand commande = new MySqlCommand(requete, _connection);
                 commande.Parameters.AddWithValue("@Email", email);
                 MySqlDataReader lecteur = commande.ExecuteReader();
 
-                string? nom = "";
-                string? prenom = "";
-                string? courriel = "";
-                string? mdp = "";
+                string? nomNew = "";
+                string? prenomNew = "";
+                string? courrielNew = "";
+                string? mdpNew = "";
 
                 while (lecteur.Read())
                 {
-                    nom = lecteur["nom"].ToString();
-                    prenom = lecteur["prenom"].ToString();
-                    courriel = lecteur["email"].ToString();
-                    mdp = lecteur["motDePasse"].ToString();
-                    Utilisateurs temp = new Utilisateurs(nom, prenom, courriel, mdp);
+                    nomNew = lecteur["nom"].ToString();
+                    prenomNew = lecteur["prenom"].ToString();
+                    courrielNew = lecteur["email"].ToString();
+                    mdpNew = lecteur["motDePasse"].ToString();
+                    Utilisateurs temp = new Utilisateurs(nomNew, prenomNew, courrielNew, mdpNew);
                     resultats.Add(temp);
                 }
 
@@ -389,11 +413,11 @@ namespace Bibliotheque.Data
         /// Accesseur sur l'instance de la base de donnée
         /// Empeche de creer deux instances
         /// </summary>
-        public static BaseDeDonnee Instance
+        public static UtilisateurBaseDeDonnee Instance
         {
             get
             {
-                _instance = _instance ?? new BaseDeDonnee();
+                _instance = _instance ?? new UtilisateurBaseDeDonnee();
                 return _instance;
             }
         }

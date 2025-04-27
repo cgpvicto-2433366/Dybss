@@ -1,10 +1,13 @@
 ﻿using Bibliotheque.Interface;
+using Bibliotheque.Data;
+using Bibliotheque.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using ZstdSharp.Unsafe;
 
 namespace Bibliotheque.Controlleurs
 {
@@ -20,13 +23,102 @@ namespace Bibliotheque.Controlleurs
         private static UtilisateursCtlr _instance = null;
         #endregion
 
-        #region Constructeur
+        #region Constructeur & Méthodes
+        /// <summary>
+        /// Constructeur vide
+        /// </summary>
         private UtilisateursCtlr()
         {
-            
+            _gestionnaireUtilisateur = new UtilisateurBaseDeDonnee();
+        }
+
+        /// <summary>
+        /// Methode pour enregistrer un utilisateur dans la base de donnée
+        /// </summary>
+        /// <param name="nom">Nom de l'utilisateur</param>
+        /// <param name="prenom">Prenom de l'utilisateur</param>
+        /// <param name="email"> Email de l'utilisateur</param>
+        /// <param name="motDp">Mot de passe de l'utilisateur </param>
+        /// <returns>true si l'enregistrement est réussi si non false
+        /// </returns>
+        public bool Enregistrement (string nom, string prenom, string email,string motDp)
+        {
+            Utilisateurs user = new Utilisateurs(nom, prenom, email, motDp);
+
+            return _gestionnaireUtilisateur.Enregistrer(user);
+        }
+
+        /// <summary>
+        /// Authentification de l'utilisateur
+        /// </summary>
+        /// <param name="email">Email</param>
+        /// <param name="motDePasse">Mot de passe </param>
+        /// <returns>True si il est identifier</returns>
+        public bool Identification(string email, string motDePasse)
+        {
+            return _gestionnaireUtilisateur.Identifier(email, motDePasse);
+        }
+
+        /// <summary>
+        /// Methode pour modifier les informations d'un utilisateur
+        /// </summary>
+        /// <param name="email">Courriel (obligatoire) car servira a identifier l'utilisateur dans la bd</param>
+        /// <param name="nom">Nouveau nom (facultatif)</param>
+        /// <param name="prenom">Nouveau prénom (facultatif)</param>
+        /// <param name="motDp">NOuveau mot de passe (facultatif)</param>
+        /// <returns>L'utilisateur une fois modifié</returns>
+        public Utilisateurs Modification(Utilisateurs user,string? email=null, string? nom=null, string? prenom=null, string? motDp= null)
+        {
+            if (nom is null)
+                nom = user.Nom;
+            if (prenom is null)
+                prenom = user.Prenom;
+            if (motDp is null)
+                motDp = user.MotDePasse;
+            if (email is null)
+                email = user.Email;
+
+            return _gestionnaireUtilisateur.Modifier(user.Email, email, nom, prenom, motDp);
+        }
+
+        /// <summary>
+        /// Méthodes pour afficher tous les utilisateurs enregistrer dans la base de donnée
+        /// </summary>
+        /// <returns>Liste des utilisateurs</returns>
+        public List<Utilisateurs> TousLesUtilisateurs()
+        {
+            return _gestionnaireUtilisateur.AfficherTousLesUtilisateurs();
+        }
+
+        /// <summary>
+        /// Cherhcer des utilisateurs en fonction d'au moins un paramètre dans la bd
+        /// </summary>
+        /// <param name="email">pouvant etre null</param>
+        /// <param name="nom">pouvant être null</param>
+        /// <param name="prenom">pouvant être null</param>
+        /// <returns>Liste des utilisateurs trouvé</returns>
+        public List<Utilisateurs>? ChercherUtilisateurs(string? email=null , string? nom=null, string? prenom=null)
+        {
+            if (email == null && prenom == null && nom == null)
+                TousLesUtilisateurs();
+
+            return _gestionnaireUtilisateur.ChercherUtilisateurs(email, nom, prenom);
         }
         #endregion
 
-
+        #region Accesseur
+        /// <summary>
+        /// Accesseur sur l'instance du controlleur
+        /// Elle assure l'unicité de l'instanciation du controlleur
+        /// des utilisateurs (une instance par utilisateur)
+        /// </summary>
+        public static UtilisateursCtlr Instance
+        {
+            get
+            {
+                return (_instance == null) ? new UtilisateursCtlr() : _instance;
+            }
+        }
+        #endregion
     }
 }
