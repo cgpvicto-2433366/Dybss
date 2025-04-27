@@ -22,7 +22,7 @@ namespace Bibliotheque.Classes
         /// <param name="nom">Nom valeur, non null ni vide</param>
         /// <param name="prenom">valeur, non null ni vide</param>
         /// <param name="email">valeur, non null ni vide et respectant un regex</param>
-        public Utilisateurs(string nom, string prenom, string email, string motDePasse= "Test12345!")
+        public Utilisateurs(string nom, string prenom, string email, string motDePasse)
         {
             Nom = nom;
             Prenom = prenom;

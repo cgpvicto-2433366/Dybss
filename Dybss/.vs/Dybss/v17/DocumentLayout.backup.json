@@ -11,12 +11,12 @@
       "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\interface\\iutilisateursource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\classes\\utilisateurs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\classes\\utilisateurs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\controlleurs\\utilisateursctlr.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\controlleurs\\utilisateursctlr.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\classes\\utilisateurs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\classes\\utilisateurs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\classes\\produits.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,8 +30,16 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -40,7 +48,7 @@
               "RelativeDocumentMoniker": "Bibliotheque\\Interface\\IUtilisateurSource.cs",
               "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Interface\\IUtilisateurSource.cs",
               "RelativeToolTip": "Bibliotheque\\Interface\\IUtilisateurSource.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABMAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAABAyczMzMwswA0AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-25T20:15:06.281Z",
               "EditorCaption": ""
@@ -53,14 +61,14 @@
               "RelativeDocumentMoniker": "Bibliotheque\\Data\\BaseDeDonnee.cs",
               "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Data\\BaseDeDonnee.cs",
               "RelativeToolTip": "Bibliotheque\\Data\\BaseDeDonnee.cs",
-              "ViewState": "AgIAAJoAAAAAAAAAAADwv6kAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKAAAAAAh2ZmZuYmwKsAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-25T19:06:03.534Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "UtilisateursCtlr.cs",
               "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Controlleurs\\UtilisateursCtlr.cs",
               "RelativeDocumentMoniker": "Bibliotheque\\Controlleurs\\UtilisateursCtlr.cs",
@@ -81,29 +89,20 @@
               "RelativeToolTip": "Bibliotheque\\Classes\\Produits.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T17:30:17.001Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-25T17:30:17.001Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Utilisateurs.cs",
               "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Classes\\Utilisateurs.cs",
               "RelativeDocumentMoniker": "Bibliotheque\\Classes\\Utilisateurs.cs",
               "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Classes\\Utilisateurs.cs",
               "RelativeToolTip": "Bibliotheque\\Classes\\Utilisateurs.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAuwB0AAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-25T17:15:52.029Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
             }
           ]
         }

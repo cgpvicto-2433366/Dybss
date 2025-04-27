@@ -9,6 +9,11 @@ using System.Data.SqlTypes;
 using MySql.Data.MySqlClient;
 using Bibliotheque.Controlleurs;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Runtime.InteropServices.ObjectiveC;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using System.Security.Cryptography;
+using Microsoft.IdentityModel.Tokens;
+
 
 namespace Bibliotheque.Data
 {
@@ -22,6 +27,7 @@ namespace Bibliotheque.Data
         private static bool _status = false;
         private static MySqlConnection _connection;
         private static BaseDeDonnee _instance = null;
+        private string _tableAssocie = "users";
         #endregion
 
         #region Méthodes
@@ -32,6 +38,8 @@ namespace Bibliotheque.Data
         {
             try
             {
+                if ( _connection.State == System.Data.ConnectionState.Open)
+                    return "La connexion est déjà ouverte";
                 _connection = new MySqlConnection("Server=localhost;Database=Dybss;Uid=root;Pwd=mysql;");
                 _connection.Open();
                 _status = true;
@@ -49,24 +57,74 @@ namespace Bibliotheque.Data
         /// <returns>mesage de fermeture</returns>
         public static string Close()
         {
-            if (_status == true && _connection.State == System.Data.ConnectionState.Open)
+            try
             {
-                try
+                if (_connection.State == System.Data.ConnectionState.Open)
                 {
                     _connection.Close();
                     _status = false;
                     return "Connexion fermée.";
                 }
-                catch (Exception ex)
+                else
                 {
-                    return "Erreur lors de la fermeture de la connexion : " + ex.Message;
+                    return "La connexion est déjà fermée ou nulle.";
                 }
+
             }
-            else
+            catch (Exception ex)
             {
-                _status = false;
-                return "La connexion est déjà fermée ou nulle.";
+                return "Erreur lors de la fermeture de la connexion : " + ex.Message;
+            } 
+        }
+
+        /// <summary>
+        /// Methode pour hasher un mot de passe 
+        /// selon l'algorithme SHA2,256
+        /// </summary>
+        /// <param name="motDePasse">Mot de passe a hacher, non null ni vide</param>
+        /// <returns>string représentant le mot de passe hasher</returns>
+        private string HacherMotDePasse(string motDePasse)
+        {
+            VerifivationDesChampsNull(motDePasse);
+            VerifivationDesChampsVide(motDePasse);
+
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // Convert the input string to a byte array and compute the hash.
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(motDePasse));
+
+                // Convert the byte array to a hexadecimal string.
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
             }
+        }
+
+        /// <summary>
+        /// Méthode pour verifier si un champ est null
+        /// </summary>
+        /// <typeparam name="T">Le type du champ</typeparam>
+        /// <param name="champ">le champ a verifier</param>
+        private void VerifivationDesChampsNull<T>(T champ)
+        {
+            if (champ is null)
+                throw new ArgumentNullException($"Le {nameof(champ)} est obligatoire");
+
+        }
+
+        /// <summary>
+        /// Méthode pour verifier si un champ est vide
+        /// </summary>
+        /// <typeparam name="T">Le type du champ</typeparam>
+        /// <param name="champ">le champ a verifier</param>
+        private void VerifivationDesChampsVide<T>(T champ)
+        {
+            string? temp = champ?.ToString();
+            if (string.IsNullOrEmpty(temp))
+                throw new ArgumentException($"le {nameof(champ)} ne peut pas être vide");
         }
 
         /// <summary>
@@ -83,37 +141,40 @@ namespace Bibliotheque.Data
                 string email = personne.Email;
                 string mdp = personne.MotDePasse;
 
-                if (nom is null)
-                    throw new ArgumentNullException("Le nom est obligatoire");
-                if (prenom is null)
-                    throw new ArgumentNullException("Le prénom est obligatoire");
-                if (email is null)
-                    throw new ArgumentNullException("L'email est obligatoire");
-                if (mdp is null)
-                    throw new ArgumentNullException("Le mot de passe est obligatoire est obligatoire");
-                if (Identifier(email, mdp))
-                    throw new ArgumentException("Compte déjà existant");
+                VerifivationDesChampsNull(nom);
+                VerifivationDesChampsVide(nom);
+                VerifivationDesChampsNull(prenom);
+                VerifivationDesChampsVide(prenom);
+                VerifivationDesChampsNull(email);
+                VerifivationDesChampsVide(email);
+                VerifivationDesChampsNull(mdp);
+                VerifivationDesChampsVide(mdp);
 
-                Open();
+                if (ChercherUtilisateurs(email) !=null)
+                    throw new ArgumentException("Compte déjà existant, Essayer de vous identifier");
 
                 //Conception de la requête Sql
                 const string Colonne = "nom, prenom, email, motDepasse";
-                const string Table = "users";
-                string valeurs ="'"+ nom + "', '" + prenom + "', '" + email + "', '" + mdp+"'";
 
-                string requete = $"INSERT INTO {Table} ({Colonne}) VALUE ({valeurs})";
+                string valeurs ="'"+ nom + "', '" + prenom + "', '" + email + "', AES_ENCRYPT(SHA2('" + mdp+"',256), @cle))";
 
-                MySqlCommand command = new MySqlCommand(requete, _connection);
+                string requete = $"INSERT INTO {_tableAssocie} ({Colonne}) VALUE ({valeurs});";
 
-                int rowsAffected = command.ExecuteNonQuery();
+                Open();
 
-                Close();
+                MySqlCommand commande = new MySqlCommand(requete, _connection);
+
+                int rowsAffected = commande.ExecuteNonQuery();
 
                 return (rowsAffected > 0 ? true : false);
             }
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de l'exécution de la requête : " + ex.Message);
+            }
+            finally
+            {
+                Close();
             }
         }
 
@@ -123,31 +184,203 @@ namespace Bibliotheque.Data
         /// <param name="email">l'email de l'utilisateur</param>
         /// <param name="motDePasse">Mot de passe de l'utilisateur</param>
         /// <returns>True si il est identifier</returns>
-        /// <exception cref="NotImplementedException"></exception>
         public bool Identifier(string email, string motDePasse)
         {
-            throw new NotImplementedException();
+            try
+            {
+                VerifivationDesChampsNull(email);
+                VerifivationDesChampsVide(email);
+                VerifivationDesChampsNull(motDePasse);
+                VerifivationDesChampsVide(motDePasse);
+
+                //Cherche l'utilisateur
+                List<Utilisateurs>? temp = ChercherUtilisateurs(email);
+
+                if(temp.Count==1)
+                {
+                    //Verifie le mot de passe
+                    string requete = $"SELECT AES_DECRYPT(motDePasse, @cle) FROM {_tableAssocie} WHERE email= @Email;";
+
+                    Open();
+
+                    MySqlCommand commande = new MySqlCommand(requete, _connection);
+                    commande.Parameters.AddWithValue("@Email", temp[0].Email);
+                    object resultat = commande.ExecuteScalar();
+
+                    if (resultat == null)
+                        throw new Exception("Aucun mot de passe enregistré ou Erreur de récupération de mot de passe dans la base de donné");
+                    string mdpDecrypter = Encoding.UTF8.GetString((byte[])(resultat));
+
+                    //Hasher le mot de passe entrer par l'utilisateur avec le même algorithme
+                    //Utiliser pour hasher les mots de passe se trouvant dans la Base de donnée
+     
+                    string mdpUserHasher = HacherMotDePasse(motDePasse);
+
+                    // Étape 3 : Comparer les deux valeurs
+                    return mdpUserHasher.Equals(mdpDecrypter);
+                }
+                return false;
+            }
+            catch( Exception ex)
+            {
+                throw new Exception("Erreur lors de l'identifiaction de l'utilisateur"+ex.Message);
+            }
+            finally
+            {
+                Close();
+            }
         }
 
         /// <summary>
         /// Modifier les informationsd'un utilisateur se trouvant dans la base de donnée
         /// </summary>
-        /// <param name="email">email pour identifier l'utilsateur</param>
+        /// <param name="email">email pour identifier l'utilsateur il s'agit donc d'un paramètre obligatoire. Le autres sont facultatifs</param>
         /// <returns>Les informatons une fois modifié</returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public string Modifier(string email)
+        public Utilisateurs Modifier(string email, string nom, string prenom, string mdp)
         {
-            throw new NotImplementedException();
+            try
+            {
+                VerifivationDesChampsNull(email);
+                VerifivationDesChampsVide(email);
+                VerifivationDesChampsNull(nom);
+                VerifivationDesChampsVide(nom);
+                VerifivationDesChampsNull(prenom);
+                VerifivationDesChampsVide(prenom);
+                VerifivationDesChampsNull(mdp);
+                VerifivationDesChampsVide(mdp);
+
+                Utilisateurs resultat = new Utilisateurs(nom, prenom, email, mdp);
+
+                List<Utilisateurs>? temp = ChercherUtilisateurs(email);
+
+                if (temp.Count == 1)
+                {
+                    //Construction de la requête
+                    string requete = $"UPDATE {_tableAssocie} SET email=@Email";
+                    requete += ", nom=@Nom";
+                    requete += ", prenom=@Prenom";
+                    requete += ", motDePasse = AES_ENCRYPT(SHA2(@mdp,256),@cle)";
+                    requete += " WHERE email=@Email;";
+
+                    Open();
+
+                    MySqlCommand commande = new MySqlCommand(requete, _connection);
+                    commande.Parameters.AddWithValue("@Email", email);
+                    commande.Parameters.AddWithValue("@Nom", nom);
+                    commande.Parameters.AddWithValue("@Prenom", prenom);
+                    commande.Parameters.AddWithValue("@mdp", mdp);
+
+                    int compteur = commande.ExecuteNonQuery();
+
+                    if (compteur == 1)
+                        return resultat;
+                }
+                throw new Exception("La modification de plus d'un utilisateur de façon simultanée n'est pas possible");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur: " + ex.Message);
+            }
+            finally
+            {
+                Close();
+            }
         }
 
-        public List<Utilisateurs> AfficherTousLesUtilisateurs()
+        /// <summary>
+        /// Afficher tous les utilisateurs enregistré dans la base de
+        /// données
+        /// </summary>
+        /// <returns>La liste des utilisateurs</returns>
+        public List<Utilisateurs>? AfficherTousLesUtilisateurs()
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<Utilisateurs> resultats = new List<Utilisateurs>();
+                string? nom = "";
+                string? prenom = "";
+                string? courriel = "";
+                string? mdp = "";
+
+                //Construction de la requête
+                string requete = $"SELECT nom, prenom, email, motDepasse FROM ${_tableAssocie};";
+
+                Open();
+
+                MySqlCommand commande = new MySqlCommand(requete, _connection);
+                MySqlDataReader lecteur = commande.ExecuteReader();
+                while (lecteur.Read())
+                {
+                    nom = lecteur["nom"].ToString();
+                    prenom = lecteur["prenom"].ToString();
+                    courriel = lecteur["email"].ToString();
+                    mdp = lecteur["motDePasse"].ToString();
+                    Utilisateurs temp = new Utilisateurs(nom, prenom, courriel, mdp);
+                    resultats.Add(temp);
+                }
+
+                return (resultats.Count == 0) ? null : resultats;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur: " + ex.Message);
+            }
+            finally
+            {
+                Close();
+            }
         }
 
-        public Utilisateurs ChercherUnUtilisateur()
+        /// <summary>
+        /// Chercher si le compte d'un utilisateur est déja existant
+        /// cette recherche se basera sur l'email de l'utilisateur
+        /// car elle est unique
+        /// </summary>
+        /// <param name="email">Email de l'utilisateur</param>
+        /// <returns>Toutes les informations d'un utilisateur avec le mot de passe crypter et hasher</returns>
+        public List<Utilisateurs>? ChercherUtilisateurs(string email)
         {
-            throw new NotImplementedException();
+            VerifivationDesChampsNull(email);
+            VerifivationDesChampsVide(email);
+            List<Utilisateurs> resultats= new List<Utilisateurs>();
+
+            try
+            {
+
+                //Construction de la requête
+                string requete = $"SELECT nom, prenom, email, motDePasse FROM {_tableAssocie} WHERE email=@Email;";
+
+                Open();
+
+                MySqlCommand commande = new MySqlCommand(requete, _connection);
+                commande.Parameters.AddWithValue("@Email", email);
+                MySqlDataReader lecteur = commande.ExecuteReader();
+
+                string? nom = "";
+                string? prenom = "";
+                string? courriel = "";
+                string? mdp = "";
+
+                while (lecteur.Read())
+                {
+                    nom = lecteur["nom"].ToString();
+                    prenom = lecteur["prenom"].ToString();
+                    courriel = lecteur["email"].ToString();
+                    mdp = lecteur["motDePasse"].ToString();
+                    Utilisateurs temp = new Utilisateurs(nom, prenom, courriel, mdp);
+                    resultats.Add(temp);
+                }
+
+                return (resultats.Count == 0) ? null : resultats;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception( "Erreur: " + ex.Message);
+            }
+            finally
+            {
+                Close();
+            }
         }
         #endregion
 

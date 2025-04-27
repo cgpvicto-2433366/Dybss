@@ -1,0 +1,6 @@
+C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Bibliotheque\obj\Debug\net8.0\Bibliotheque.csproj.AssemblyReference.cache
+C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Bibliotheque\obj\Debug\net8.0\Bibliotheque.GeneratedMSBuildEditorConfig.editorconfig
+C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Bibliotheque\obj\Debug\net8.0\Bibliotheque.AssemblyInfoInputs.cache
+C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Bibliotheque\obj\Debug\net8.0\Bibliotheque.AssemblyInfo.cs
+C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Bibliotheque\obj\Debug\net8.0\Bibliotheque.csproj.CoreCompileInputs.cache
+C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Bibliotheque\obj\Debug\net8.0\Bibliotheque.sourcelink.json

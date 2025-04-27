@@ -32,7 +32,7 @@ namespace Bibliotheque.Interface
         /// </summary>
         /// <param name="email">email, pour identifier quel utilisateur modifier</param>
         /// <returns>L'ensemble des informations une fois modifier</returns>
-        public string Modifier(string email);
+        public Utilisateurs Modifier(string email, string nom, string prenom, string mdp);
 
         /// <summary>
         /// Afficher tous les utilisateurs
@@ -45,7 +45,8 @@ namespace Bibliotheque.Interface
         /// Cherhcher un utilisateur dans la base de donnée
         /// </summary>
         /// <returns>Un utilisateur</returns>
-        public Utilisateurs ChercherUnUtilisateur();
+        /// <param name="email">email de l'utilisateur</param>
+        public List<Utilisateurs>? ChercherUtilisateurs(string email);
 
 
     }
