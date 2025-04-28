@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using Org.BouncyCastle.Crypto.Digests;
+using System.Diagnostics;
 
 
 namespace Bibliotheque.Data
@@ -26,7 +27,7 @@ namespace Bibliotheque.Data
     {
         #region Attributs
         private static bool _status = false;
-        private static MySqlConnection _connection;
+        private static MySqlConnection _connection= new MySqlConnection();
         private static UtilisateurBaseDeDonnee _instance = null;
         private string _tableAssocie = "users";
         #endregion
@@ -35,20 +36,20 @@ namespace Bibliotheque.Data
         /// <summary>
         /// Connection a la base de donnée
         /// </summary>
-        public static string Open()
+        public static void Open()
         {
             try
             {
-                if ( _connection.State == System.Data.ConnectionState.Open)
-                    return "La connexion est déjà ouverte";
+                if (_connection.State == System.Data.ConnectionState.Open)
+                    Debug.Write("Connexion déja ouverte");
                 _connection = new MySqlConnection("Server=localhost;Database=Dybss;Uid=root;Pwd=mysql;");
                 _connection.Open();
                 _status = true;
-                return "Connexion réussie à MySQL !";
+                Debug.Write("Connexion réussie à MySQL !");
             }
             catch (Exception ex)
             {
-                return "Erreur : " + ex.Message;
+                Debug.Write("Erreur : " + ex.Message);
             }
         }
 
@@ -56,7 +57,7 @@ namespace Bibliotheque.Data
         /// Fermer la connection a la base de donnée
         /// </summary>
         /// <returns>mesage de fermeture</returns>
-        public static string Close()
+        public static void Close()
         {
             try
             {
@@ -64,17 +65,17 @@ namespace Bibliotheque.Data
                 {
                     _connection.Close();
                     _status = false;
-                    return "Connexion fermée.";
+                    Debug.Write("Connexion fermée.");
                 }
                 else
                 {
-                    return "La connexion est déjà fermée ou nulle.";
+                    Debug.Write("La connexion est déjà fermée ou nulle.");
                 }
 
             }
             catch (Exception ex)
             {
-                return "Erreur lors de la fermeture de la connexion : " + ex.Message;
+                Debug.Write ("Erreur lors de la fermeture de la connexion : " + ex.Message);
             } 
         }
 
@@ -113,7 +114,6 @@ namespace Bibliotheque.Data
         {
             if (champ is null)
                 throw new ArgumentNullException($"Le {nameof(champ)} est obligatoire");
-
         }
 
         /// <summary>
@@ -157,14 +157,14 @@ namespace Bibliotheque.Data
                 //Conception de la requête Sql
                 const string Colonne = "nom, prenom, email, motDepasse";
 
-                string valeurs ="'"+ nom + "', '" + prenom + "', '" + email + "', AES_ENCRYPT(SHA2('" + mdp+"',256), @cle))";
+                string valeurs ="'"+ nom + "', '" + prenom + "', '" + email + "', AES_ENCRYPT(SHA2('" + mdp+"',256), @cle)";
 
                 string requete = $"INSERT INTO {_tableAssocie} ({Colonne}) VALUE ({valeurs});";
 
                 Open();
 
                 MySqlCommand commande = new MySqlCommand(requete, _connection);
-
+                commande.Parameters.AddWithValue("@cle", "DybVicQuebec");
                 int rowsAffected = commande.ExecuteNonQuery();
 
                 return (rowsAffected > 0 ? true : false);
@@ -182,8 +182,8 @@ namespace Bibliotheque.Data
         /// <summary>
         ///Identifier un utilisateur dans la base de donnée 
         /// </summary>
-        /// <param name="email">l'email de l'utilisateur</param>
-        /// <param name="motDePasse">Mot de passe de l'utilisateur</param>
+        /// <param name="email">l'email de l'utilisateur(champ obligatoire)</param>
+        /// <param name="motDePasse">Mot de passe de l'utilisateur(champ obligatoire)</param>
         /// <returns>True si il est identifier</returns>
         public bool Identifier(string email, string motDePasse)
         {
@@ -205,6 +205,7 @@ namespace Bibliotheque.Data
                     Open();
 
                     MySqlCommand commande = new MySqlCommand(requete, _connection);
+                    commande.Parameters.AddWithValue("@cle", "DybVicQuebec");
                     commande.Parameters.AddWithValue("@Email", temp[0].Email);
                     object resultat = commande.ExecuteScalar();
 
@@ -275,6 +276,7 @@ namespace Bibliotheque.Data
                     commande.Parameters.AddWithValue("@Nom", nom);
                     commande.Parameters.AddWithValue("@Prenom", prenom);
                     commande.Parameters.AddWithValue("@mdp", mdp);
+                    commande.Parameters.AddWithValue("@cle", "DybVicQuebec");
                     commande.Parameters.AddWithValue("@EmailId",emailID);
 
                     int compteur = commande.ExecuteNonQuery();

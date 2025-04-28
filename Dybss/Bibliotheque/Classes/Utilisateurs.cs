@@ -107,23 +107,18 @@ namespace Bibliotheque.Classes
         /// <summary>
         /// Accesseurs su le mot de passe, non null ni vide
         /// au moins 8 caractères
-        /// contenant au moins une majuscule, un caractère spécial un chiffre
+        /// contenant au moins une majuscule, un caractère spécial un chiffre (frontend)
         /// </summary>
         public string MotDePasse
         {
-            get => _nom;
+            get => _motDePasse;
             private set
             {
                 if (value is null)
                     throw new ArgumentNullException("Le mot de passe ne peut être null");
                 if (string.IsNullOrEmpty(value))
                     throw new ArgumentException("Le mot de passe ne peut être vide");
-                if(value.Length<8)
-                    throw new ArgumentException("Le mot de passe ne peut être moins de 8 caractères");
-                Regex rgx = new Regex(@"^(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$");
-                if (!rgx.IsMatch(value))
-                    throw new ArgumentException("Le mot de passe n'est pas conforme");
-                _nom = value;
+                _motDePasse = value;
             }
         }
         #endregion

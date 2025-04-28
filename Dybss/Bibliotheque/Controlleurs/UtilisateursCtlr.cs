@@ -20,7 +20,7 @@ namespace Bibliotheque.Controlleurs
     {
         #region Attributs
         private IUtilisateurSource _gestionnaireUtilisateur;
-        private static UtilisateursCtlr _instance = null;
+        private static UtilisateursCtlr? _instance = null;
         #endregion
 
         #region Constructeur & Méthodes
@@ -35,17 +35,12 @@ namespace Bibliotheque.Controlleurs
         /// <summary>
         /// Methode pour enregistrer un utilisateur dans la base de donnée
         /// </summary>
-        /// <param name="nom">Nom de l'utilisateur</param>
-        /// <param name="prenom">Prenom de l'utilisateur</param>
-        /// <param name="email"> Email de l'utilisateur</param>
-        /// <param name="motDp">Mot de passe de l'utilisateur </param>
+        ///<param name="personne">L'utilisateur qu'on veut enregistré</param>
         /// <returns>true si l'enregistrement est réussi si non false
         /// </returns>
-        public bool Enregistrement (string nom, string prenom, string email,string motDp)
+        public bool Enregistrement (Utilisateurs personne)
         {
-            Utilisateurs user = new Utilisateurs(nom, prenom, email, motDp);
-
-            return _gestionnaireUtilisateur.Enregistrer(user);
+            return _gestionnaireUtilisateur.Enregistrer(personne);
         }
 
         /// <summary>

@@ -9,12 +9,12 @@ namespace Bibliotheque.Interface
 {
     /// <summary>
     /// Interface definissant les actions que pourra effectuer un 
-    /// controlleur de client
+    /// controlleur d'utilisateur
     /// </summary>
     public interface IUtilisateurSource
     {
         /// <summary>
-        /// Enregistrer les infos dans  la bd
+        /// Enregistrer les utilisateurs dans la base de donnée
         /// </summary>
         /// <param name="personne">toutes les infos sur le client</param>
         public bool Enregistrer(Utilisateurs personne);

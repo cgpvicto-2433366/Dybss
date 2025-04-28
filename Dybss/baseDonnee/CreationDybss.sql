@@ -11,7 +11,7 @@ CREATE TABLE users(
     nom VARCHAR(255),
     prenom VARCHAR(255),
     email VARCHAR(255),
-    motDePasse VARCHAR(64),
+    motDePasse BLOB,
     role_user enum('Admin', 'client', 'Employe') DEFAULT 'Client',
     CONSTRAINT email_check CHECK(email RLIKE '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 );
