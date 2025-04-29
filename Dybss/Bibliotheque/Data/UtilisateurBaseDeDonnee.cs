@@ -258,7 +258,7 @@ namespace Bibliotheque.Data
 
                 Utilisateurs resultat = new Utilisateurs(nom, prenom, email, mdp);
 
-                List<Utilisateurs>? temp = ChercherUtilisateurs(email);
+                List<Utilisateurs>? temp = ChercherUtilisateurs(emailID);
 
                 if (temp.Count == 1)
                 {
@@ -312,7 +312,7 @@ namespace Bibliotheque.Data
                 string? mdp = "";
 
                 //Construction de la requête
-                string requete = $"SELECT nom, prenom, email, motDepasse FROM ${_tableAssocie};";
+                string requete = $"SELECT nom, prenom, email, motDepasse FROM {_tableAssocie};";
 
                 Open();
 
@@ -379,7 +379,13 @@ namespace Bibliotheque.Data
                 Open();
 
                 MySqlCommand commande = new MySqlCommand(requete, _connection);
-                commande.Parameters.AddWithValue("@Email", email);
+                if (email != null)
+                    commande.Parameters.AddWithValue("@Email", email);
+                if(nom!=null)
+                    commande.Parameters.AddWithValue("@Nom", nom);
+               if (prenom != null)
+                    commande.Parameters.AddWithValue("@Prenom", prenom);
+
                 MySqlDataReader lecteur = commande.ExecuteReader();
 
                 string? nomNew = "";

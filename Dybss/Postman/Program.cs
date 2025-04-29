@@ -16,9 +16,16 @@ namespace Postman
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            //Utilisateurs test = new Utilisateurs("Ben", "test", "test3@gmail.com", "MotDepasse*12");
+            Utilisateurs test = new Utilisateurs("Ben", "test", "test78@gmail.com", "MotDepasse*12");
 
             //Console.Write( UtilisateursCtlr.Instance.Enregistrement(test));
+
+            //Console.Write( UtilisateursCtlr.Instance.Identification("test3@gmail.com", "MotDepasse*12"));
+
+            //Console.Write(UtilisateursCtlr.Instance.Modification(test, "test4@gmail.com", "test"));
+
+            Console.Write(UtilisateursCtlr.Instance.ChercherUtilisateurs(null,"test"));
+        
         }
     }
 }

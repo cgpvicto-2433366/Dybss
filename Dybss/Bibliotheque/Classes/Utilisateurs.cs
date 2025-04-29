@@ -48,7 +48,7 @@ namespace Bibliotheque.Classes
         /// <returns>Le nom de l'utilisateur</returns>
         public override string ToString()
         {
-            return Nom;
+            return Nom+" "+Prenom+" "+Email+" "+ MotDePasse;
         }
         #endregion
 
