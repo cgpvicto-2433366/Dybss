@@ -24,7 +24,7 @@ namespace Postman
 
             //Console.Write(UtilisateursCtlr.Instance.Modification(test, "test4@gmail.com", "test"));
 
-            Console.Write(UtilisateursCtlr.Instance.ChercherUtilisateurs(null,"test"));
+            //Console.Write(UtilisateursCtlr.Instance.ChercherUtilisateurs(null,"test"));
         
         }
     }

@@ -19,7 +19,9 @@ CREATE TABLE users(
 CREATE TABLE produits(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(255),
-    code VARCHAR(255),
+    code_rapide VARCHAR(255),
+    code_barre DECIMAL(15),
+    date_fabrication DATE,
     categorie enum('Dessert','Boisson', 'Sandwich') DEFAULT 'Boisson'
 );
 
@@ -30,3 +32,6 @@ CREATE TABLE employes(
     id_utilisateur INt,
     FOREIGN KEY (id_utilisateur) REFERENCES users(id)
 );
+
+
+INSERT INTO users (nom, prenom, email, motDepasse) VALUE ('Ben', 'test', 'test1@gmail.com', AES_ENCRYPT(SHA2('MotDepasse*12',256), @cle));
