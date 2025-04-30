@@ -50,7 +50,7 @@ namespace Bibliotheque.Data
             }
             catch (Exception ex)
             {
-                Debug.Write("Erreur : " + ex.Message);
+                throw new Exception("Erreur lors de la connexion a la source de donnée");
             }
         }
 
@@ -76,7 +76,7 @@ namespace Bibliotheque.Data
             }
             catch (Exception ex)
             {
-                Debug.Write ("Erreur lors de la fermeture de la connexion : " + ex.Message);
+                throw new Exception("Erreur déconnexion a la source de donnée");
             } 
         }
 
@@ -172,7 +172,7 @@ namespace Bibliotheque.Data
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur lors de l'exécution de la requête : " + ex.Message);
+                throw new Exception("Erreur lors de l'enregisttrement de l'utilisateur");
             }
             finally
             {
@@ -188,57 +188,57 @@ namespace Bibliotheque.Data
         /// <returns>le role si il est identifier, si non retourne "null"</returns>
         public string Identifier(string email, string motDePasse)
         {
+            VerifivationDesChampsNull(email);
+            VerifivationDesChampsVide(email);
+            VerifivationDesChampsNull(motDePasse);
+            VerifivationDesChampsVide(motDePasse);
 
-                VerifivationDesChampsNull(email);
-                VerifivationDesChampsVide(email);
-                VerifivationDesChampsNull(motDePasse);
-                VerifivationDesChampsVide(motDePasse);
+            //Cherche l'utilisateur
+            List<Utilisateurs>? temp = ChercherUtilisateurs(email);
 
-                //Cherche l'utilisateur
-                List<Utilisateurs>? temp = ChercherUtilisateurs(email);
+            if (temp != null && temp.Count == 1)
+            {
+                //Verifie le mot de passe
+                string requete = $"SELECT AES_DECRYPT(motDePasse, @cle) AS MDP, role_user FROM {_tableAssocie} WHERE email= @Email;";
 
-                if(temp != null && temp.Count==1)
+                Open();
+
+                MySqlCommand commande = new MySqlCommand(requete, _connection);
+                commande.Parameters.AddWithValue("@cle", "DybVicQuebec");
+                commande.Parameters.AddWithValue("@Email", temp[0].Email);
+                MySqlDataReader lecteur = commande.ExecuteReader();
+
+                if (lecteur == null)
                 {
-                    //Verifie le mot de passe
-                    string requete = $"SELECT AES_DECRYPT(motDePasse, @cle) AS MDP, role_user FROM {_tableAssocie} WHERE email= @Email;";
-
-                    Open();
-
-                    MySqlCommand commande = new MySqlCommand(requete, _connection);
-                    commande.Parameters.AddWithValue("@cle", "DybVicQuebec");
-                    commande.Parameters.AddWithValue("@Email", temp[0].Email);
-                    MySqlDataReader lecteur = commande.ExecuteReader();
-
-                    if (lecteur == null)
-                    {
-                        throw new Exception("Aucun mot de passe enregistré ou Erreur de récupération de mot de passe dans la base de donné");
-                    }
-
-                    Object   tempMdp = "";
-                    string role = "";
-
-                    while (lecteur.Read())
-                    {
-                        tempMdp = lecteur["MDP"];
-                        role = lecteur["role_user"].ToString();
-                    }   
-
-
-                    string mdpDecrypter = Encoding.UTF8.GetString((byte[])(tempMdp));
-
-                    //Hasher le mot de passe entrer par l'utilisateur avec le même algorithme
-                    //Utiliser pour hasher les mots de passe se trouvant dans la Base de donnée
-     
-                    string mdpUserHasher = HacherMotDePasse(motDePasse);
-
-                    // Étape 3 : Comparer les deux valeurs
-                    if (mdpDecrypter.Equals(mdpUserHasher)) 
-                    {
-                        return role;
-                    }
-
+                    throw new Exception("Aucun mot de passe enregistré ou Erreur de récupération de mot de passe dans la base de donné");
                 }
-                return "Null";
+
+                Object tempMdp = "";
+                string role = "";
+
+                while (lecteur.Read())
+                {
+                    tempMdp = lecteur["MDP"];
+                    role = lecteur["role_user"].ToString();
+                }
+
+                Close();
+
+                string mdpDecrypter = Encoding.UTF8.GetString((byte[])(tempMdp));
+
+                //Hasher le mot de passe entrer par l'utilisateur avec le même algorithme
+                //Utiliser pour hasher les mots de passe se trouvant dans la Base de donnée
+
+                string mdpUserHasher = HacherMotDePasse(motDePasse);
+
+                // Étape 3 : Comparer les deux valeurs
+                if (mdpDecrypter.Equals(mdpUserHasher))
+                {
+                    return role;
+                }
+
+            }
+            return "Null";
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Bibliotheque.Data
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur: " + ex.Message);
+                throw new Exception("Erreur lors de la modification de l'utilisateur");
             }
             finally
             {
@@ -340,7 +340,7 @@ namespace Bibliotheque.Data
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur: " + ex.Message);
+                throw new Exception("Erreur lors de l'affichage de tous les utilisateurs");
             }
             finally
             {
@@ -415,7 +415,7 @@ namespace Bibliotheque.Data
             }
             catch (Exception ex)
             {
-                throw new Exception( "Erreur: " + ex.Message);
+                throw new Exception( "Erreur lors de la recherche de cet utilisateur dans notre source" );
             }
             finally
             {

@@ -18,10 +18,10 @@ namespace Bibliotheque.Data
         /// Afficher tous les produits se trouvant
         ///  dans la base ded donnée
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <returns>La liste de produits contenu dans la base de donnée, chaque produit aura toutes ses infos</returns>
         public List<Produits> AfficherTousLesProduits()
         {
+            //string requete=$"SELECT "
             throw new NotImplementedException();
         }
 

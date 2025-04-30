@@ -80,3 +80,4 @@ C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Postman\obj\Debug\net8
 C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Postman\obj\Debug\net8.0\Postman.pdb
 C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Postman\obj\Debug\net8.0\Postman.genruntimeconfig.cache
 C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Postman\obj\Debug\net8.0\ref\Postman.dll
+C:\ProjetsSession2\Programmation2\projetDybss\Dybss\Dybss\Postman\bin\Debug\net8.0\Dapper.dll
