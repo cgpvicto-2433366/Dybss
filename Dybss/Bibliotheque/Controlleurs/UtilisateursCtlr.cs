@@ -48,8 +48,8 @@ namespace Bibliotheque.Controlleurs
         /// </summary>
         /// <param name="email">Email</param>
         /// <param name="motDePasse">Mot de passe </param>
-        /// <returns>True si il est identifier</returns>
-        public bool Identification(string email, string motDePasse)
+        /// <returns>si l'utilisateur existe, on retournera son role</returns>
+        public string Identification(string email, string motDePasse)
         {
             return _gestionnaireUtilisateur.Identifier(email, motDePasse);
         }

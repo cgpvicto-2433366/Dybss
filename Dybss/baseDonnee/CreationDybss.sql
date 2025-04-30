@@ -4,7 +4,7 @@ CREATE DATABASE Dybss;
 
 USE Dybss;
 
-SET @cle='DybVicQuebec';
+
 
 CREATE TABLE users(
 	id INT PRIMARY KEY AUTO_INCREMENT,

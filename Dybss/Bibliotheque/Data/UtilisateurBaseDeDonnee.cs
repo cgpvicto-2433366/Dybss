@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using Org.BouncyCastle.Crypto.Digests;
 using System.Diagnostics;
+using System.Runtime.Intrinsics.Arm;
 
 
 namespace Bibliotheque.Data
@@ -185,10 +186,9 @@ namespace Bibliotheque.Data
         /// <param name="email">l'email de l'utilisateur(champ obligatoire)</param>
         /// <param name="motDePasse">Mot de passe de l'utilisateur(champ obligatoire)</param>
         /// <returns>True si il est identifier</returns>
-        public bool Identifier(string email, string motDePasse)
+        public string Identifier(string email, string motDePasse)
         {
-            try
-            {
+
                 VerifivationDesChampsNull(email);
                 VerifivationDesChampsVide(email);
                 VerifivationDesChampsNull(motDePasse);
@@ -197,21 +197,34 @@ namespace Bibliotheque.Data
                 //Cherche l'utilisateur
                 List<Utilisateurs>? temp = ChercherUtilisateurs(email);
 
-                if(temp.Count==1)
+                if(temp != null && temp.Count==1)
                 {
                     //Verifie le mot de passe
-                    string requete = $"SELECT AES_DECRYPT(motDePasse, @cle) FROM {_tableAssocie} WHERE email= @Email;";
+                    string requete = $"SELECT AES_DECRYPT(motDePasse, @cle) AS MDP, role_user FROM {_tableAssocie} WHERE email= @Email;";
 
                     Open();
 
                     MySqlCommand commande = new MySqlCommand(requete, _connection);
                     commande.Parameters.AddWithValue("@cle", "DybVicQuebec");
                     commande.Parameters.AddWithValue("@Email", temp[0].Email);
-                    object resultat = commande.ExecuteScalar();
+                    MySqlDataReader lecteur = commande.ExecuteReader();
 
-                    if (resultat == null)
+                    if (lecteur == null)
+                    {
                         throw new Exception("Aucun mot de passe enregistré ou Erreur de récupération de mot de passe dans la base de donné");
-                    string mdpDecrypter = Encoding.UTF8.GetString((byte[])(resultat));
+                    }
+
+                    Object   tempMdp = "";
+                    string role = "";
+
+                    while (lecteur.Read())
+                    {
+                        tempMdp = lecteur["MDP"];
+                        role = lecteur["role_user"].ToString();
+                    }   
+
+
+                    string mdpDecrypter = Encoding.UTF8.GetString((byte[])(tempMdp));
 
                     //Hasher le mot de passe entrer par l'utilisateur avec le même algorithme
                     //Utiliser pour hasher les mots de passe se trouvant dans la Base de donnée
@@ -219,18 +232,13 @@ namespace Bibliotheque.Data
                     string mdpUserHasher = HacherMotDePasse(motDePasse);
 
                     // Étape 3 : Comparer les deux valeurs
-                    return mdpUserHasher.Equals(mdpDecrypter);
+                    if (mdpDecrypter.Equals(mdpUserHasher)) 
+                    {
+                        return role;
+                    }
+
                 }
-                return false;
-            }
-            catch( Exception ex)
-            {
-                throw new Exception("Erreur lors de l'identifiaction de l'utilisateur"+ex.Message);
-            }
-            finally
-            {
-                Close();
-            }
+                return "Null";
         }
 
         /// <summary>

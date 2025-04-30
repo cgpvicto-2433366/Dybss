@@ -25,7 +25,7 @@ namespace Bibliotheque.Interface
         /// <param name="email">son email</param>
         /// <param name="motDePasse">son mot de passe</param>
         /// <returns> true si il existe</returns>
-        public bool Identifier(string email, string motDePasse);
+        public string Identifier(string email, string motDePasse);
 
         /// <summary>
         /// Méthodes pour modifier les informations d'un utilisateur 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Postman")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d2f71271850c4591cbeec9b9b4155166866088f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aba6d3d02fe3db3e08e48dd0de4b310fdbeaf251")]
 [assembly: System.Reflection.AssemblyProductAttribute("Postman")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Postman")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
