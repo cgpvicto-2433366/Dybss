@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\data\\utilisateurbasededonnee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\data\\utilisateurbasededonnee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\interface\\iproduitsource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\interface\\iproduitsource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\interface\\iutilisateursource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\interface\\iutilisateursource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F1CA241F-5BF3-465A-B130-2702FCA1DFDB}|Postman\\Postman.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\postman\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F1CA241F-5BF3-465A-B130-2702FCA1DFDB}|Postman\\Postman.csproj|solutionrelative:postman\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,16 +23,8 @@
       "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\controlleurs\\utilisateursctlr.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\data\\utilisateurbasededonnee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\data\\utilisateurbasededonnee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\classes\\utilisateurs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\classes\\utilisateurs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|c:\\projetssession2\\programmation2\\projetdybss\\dybss\\dybss\\bibliotheque\\interface\\iutilisateursource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D64FBFD-2542-412C-AC5B-FFC9F9DCA33C}|Bibliotheque\\Bibliotheque.csproj|solutionrelative:bibliotheque\\interface\\iutilisateursource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -41,25 +45,51 @@
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
             },
             {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UtilisateurBaseDeDonnee.cs",
+              "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
+              "RelativeDocumentMoniker": "Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
+              "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
+              "RelativeToolTip": "Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
+              "ViewState": "AgIAAIwBAAAAAAAAAAAAwJMBAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-29T04:01:07.485Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IProduitSource.cs",
+              "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Interface\\IProduitSource.cs",
+              "RelativeDocumentMoniker": "Bibliotheque\\Interface\\IProduitSource.cs",
+              "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Interface\\IProduitSource.cs",
+              "RelativeToolTip": "Bibliotheque\\Interface\\IProduitSource.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-29T03:21:28.432Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "IUtilisateurSource.cs",
               "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Interface\\IUtilisateurSource.cs",
               "RelativeDocumentMoniker": "Bibliotheque\\Interface\\IUtilisateurSource.cs",
               "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Interface\\IUtilisateurSource.cs",
               "RelativeToolTip": "Bibliotheque\\Interface\\IUtilisateurSource.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAA/wCcAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAAADwAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-28T16:16:41.81Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Utilisateurs.cs",
               "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Classes\\Utilisateurs.cs",
               "RelativeDocumentMoniker": "Bibliotheque\\Classes\\Utilisateurs.cs",
@@ -67,38 +97,24 @@
               "RelativeToolTip": "Bibliotheque\\Classes\\Utilisateurs.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAIAxwBgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T01:50:22.736Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-28T01:50:22.736Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Postman\\Program.cs",
               "RelativeDocumentMoniker": "Postman\\Program.cs",
               "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Postman\\Program.cs",
               "RelativeToolTip": "Postman\\Program.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAjwB4AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAjwBwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-28T01:33:06.093Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UtilisateurBaseDeDonnee.cs",
-              "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
-              "RelativeDocumentMoniker": "Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
-              "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
-              "RelativeToolTip": "Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
-              "ViewState": "AgIAAJEBAAAAAAAAAAAEwJ8BAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T19:06:03.534Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "UtilisateursCtlr.cs",
               "DocumentMoniker": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Controlleurs\\UtilisateursCtlr.cs",
               "RelativeDocumentMoniker": "Bibliotheque\\Controlleurs\\UtilisateursCtlr.cs",
@@ -106,8 +122,7 @@
               "RelativeToolTip": "Bibliotheque\\Controlleurs\\UtilisateursCtlr.cs",
               "ViewState": "AgIAAFYAAAAAAAAAAADgv2QAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T18:36:13.237Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-25T18:36:13.237Z"
             }
           ]
         }
