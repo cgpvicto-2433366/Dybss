@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,6 +27,10 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
@@ -38,8 +42,7 @@
               "RelativeToolTip": "Bibliotheque\\Data\\UtilisateurBaseDeDonnee.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAABmPRUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T22:29:36.5Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T22:29:36.5Z"
             },
             {
               "$type": "Document",
@@ -49,7 +52,7 @@
               "RelativeDocumentMoniker": "Bibliotheque\\Data\\ProduitBaseDeDonnee.cs",
               "ToolTip": "C:\\ProjetsSession2\\Programmation2\\projetDybss\\Dybss\\Dybss\\Bibliotheque\\Data\\ProduitBaseDeDonnee.cs",
               "RelativeToolTip": "Bibliotheque\\Data\\ProduitBaseDeDonnee.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAABQPRQAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAABQPRUAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-30T22:20:08.472Z",
               "EditorCaption": ""
