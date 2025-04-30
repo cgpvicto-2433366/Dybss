@@ -185,7 +185,7 @@ namespace Bibliotheque.Data
         /// </summary>
         /// <param name="email">l'email de l'utilisateur(champ obligatoire)</param>
         /// <param name="motDePasse">Mot de passe de l'utilisateur(champ obligatoire)</param>
-        /// <returns>True si il est identifier</returns>
+        /// <returns>le role si il est identifier, si non retourne "null"</returns>
         public string Identifier(string email, string motDePasse)
         {
 
