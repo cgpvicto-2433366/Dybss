@@ -37,7 +37,7 @@ namespace Bibliotheque.Interface
         /// <param name="mdp"></param>
         /// <returns>Utilisateur modifié</returns>
         /// <exception cref="Exception"></exception>
-        public Utilisateurs Modifier(string emailID, string email, string nom, string prenom, string mdp);
+        public Utilisateurs Modifier(string emailID, string email, string nom, string prenom, string mdp, string role);
 
         /// <summary>
         /// Afficher tous les utilisateurs

@@ -251,7 +251,7 @@ namespace Bibliotheque.Data
         /// <param name="mdp"></param>
         /// <returns>Utilisateur modifié</returns>
         /// <exception cref="Exception"></exception>
-        public Utilisateurs Modifier(string emailID, string email, string nom, string prenom, string mdp)
+        public Utilisateurs Modifier(string emailID, string email, string nom, string prenom, string mdp, string role="client")
         {
             try
             {
@@ -264,7 +264,7 @@ namespace Bibliotheque.Data
                 VerifivationDesChampsNull(mdp);
                 VerifivationDesChampsVide(mdp);
 
-                Utilisateurs resultat = new Utilisateurs(nom, prenom, email, mdp);
+                Utilisateurs resultat = new Utilisateurs(nom, prenom, email, role, mdp);
 
                 List<Utilisateurs>? temp = ChercherUtilisateurs(emailID);
 
@@ -318,9 +318,10 @@ namespace Bibliotheque.Data
                 string? prenom = "";
                 string? courriel = "";
                 string? mdp = "";
+                string? role = "";
 
                 //Construction de la requête
-                string requete = $"SELECT nom, prenom, email, motDepasse FROM {_tableAssocie};";
+                string requete = $"SELECT nom, prenom, email, role_user motDepasse FROM {_tableAssocie};";
 
                 Open();
 
@@ -332,7 +333,8 @@ namespace Bibliotheque.Data
                     prenom = lecteur["prenom"].ToString();
                     courriel = lecteur["email"].ToString();
                     mdp = lecteur["motDePasse"].ToString();
-                    Utilisateurs temp = new Utilisateurs(nom, prenom, courriel, mdp);
+                    role= lecteur["role_user"].ToString();
+                    Utilisateurs temp = new Utilisateurs(nom, prenom, courriel, role, mdp);
                     resultats.Add(temp);
                 }
 
@@ -400,6 +402,7 @@ namespace Bibliotheque.Data
                 string? prenomNew = "";
                 string? courrielNew = "";
                 string? mdpNew = "";
+                string? role = "";
 
                 while (lecteur.Read())
                 {
@@ -407,7 +410,8 @@ namespace Bibliotheque.Data
                     prenomNew = lecteur["prenom"].ToString();
                     courrielNew = lecteur["email"].ToString();
                     mdpNew = lecteur["motDePasse"].ToString();
-                    Utilisateurs temp = new Utilisateurs(nomNew, prenomNew, courrielNew, mdpNew);
+                    role= lecteur["role_user"].ToString();
+                    Utilisateurs temp = new Utilisateurs(nomNew, prenomNew, courrielNew, role, mdpNew);
                     resultats.Add(temp);
                 }
 
